@@ -1,0 +1,17 @@
+﻿<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="logo-element">
+                    IN+
+                </div>
+            </li>
+            <li class="@Html.IsSelected(controller: "Home", action: "Main")">
+                <a href="@Url.Action("Main", "Home")"><i class="fa fa-diamond"></i> <span class="nav-label">Zoom - Daily Usage</span></a>
+            </li>
+            <li class="@Html.IsSelected(controller: "Home", action: "Minor")">
+                <a href="@Url.Action("Minor", "Home")"><i class="fa fa-server"></i> <span class="nav-label">Minor</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,20 @@
+
+{
+    "region" : "us-east-1",
+    "configuration" : "Debug",
+    "framework"     : "netcoreapp3.0",
+    "self-contained" : false,
+    "application"    : "CommonPeril",
+    "environment"    : "CommonPeril-dev",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-d8a6d8df\";\"aws:ec2:vpc,Subnets\"=\"subnet-25c88c7a\"",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.1.5 running .NET Core",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "commonperil-dev",
+    "instance-type"        : "t3a.micro",
+    "key-pair"             : "openvpn",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx"
+}
