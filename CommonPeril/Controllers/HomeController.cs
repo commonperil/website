@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CommonPeril.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +19,30 @@ namespace CommonPeril.Controllers
            
             
         }
-        public IActionResult Main()
+        public IActionResult Main(int? month, int? year)
         {
-            RestClient client = new RestClient("https://script.google.com/macros/s/AKfycbxTnujwWVsKv2nmfWoAbafq5JFK4EVjVhmigGf0AqPu5anv_0oVo4O2Wa8OBMI-5ey_Mw");
+
+            month ??= DateTime.Today.Month;
+            year ??= DateTime.Today.Year;
+
+            var url =
+                $"https://script.google.com/macros/s/AKfycbxTnujwWVsKv2nmfWoAbafq5JFK4EVjVhmigGf0AqPu5anv_0oVo4O2Wa8OBMI-5ey_Mw";
+            RestClient client = new RestClient(url);
             var request = new RestRequest("exec", DataFormat.Json);
+            request.AddParameter("month", month.Value);
+            request.AddParameter("year", year.Value);
             var timeline = client.Execute(request);
             JObject completeJObject = JObject.Parse(timeline.Content);
             var results = completeJObject["body"]["dates"].Children().ToList();
             var stringResults = JsonConvert.SerializeObject(results);
-            var modelReseults = JsonConvert.DeserializeObject<List<ZoomUsageModel>>(stringResults);
+            var modelData = JsonConvert.DeserializeObject<List<ZoomUsageModelData>>(stringResults);
+            var modelReseults = new ZoomUsageModel(year.Value, month.Value)
+            {
+                Month = (MonthOfYear)month,
+                Year = year.Value,
+                ZoomData = modelData
+
+            };
 
             return View(modelReseults);
         }
