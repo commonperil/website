@@ -7,10 +7,11 @@
                 </div>
             </li>
             <li class="@Html.IsSelected(controller: "Home", action: "Main")">
-                <a href="@Url.Action("Main", "Home")"><i class="fa fa-diamond"></i> <span class="nav-label">Zoom - Daily Usage</span></a>
+                <a href="@Url.Action("Main", "Home")"><i class="fa fa-table"></i> <span class="nav-label">Zoom - Daily Usage</span></a>
+               
             </li>
-            <li class="@Html.IsSelected(controller: "Home", action: "Minor")">
-                <a href="@Url.Action("Minor", "Home")"><i class="fa fa-server"></i> <span class="nav-label">Minor</span></a>
+            <li class="@Html.IsSelected(controller: "Home", action: "Graphs")">
+                <a href="@Url.Action("Graphs", "Home")"><i class="fa fa-bar-chart"></i> <span class="nav-label">Zoom - Graphs</span></a>
             </li>
         </ul>
     </div>

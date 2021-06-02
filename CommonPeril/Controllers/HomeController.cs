@@ -22,6 +22,21 @@ namespace CommonPeril.Controllers
         public IActionResult Main(int? month, int? year)
         {
 
+            var modelResults = GetZoomData(month, year);
+
+            return View(modelResults);
+        }
+
+        public IActionResult Graphs(int? month, int? year)
+        {
+
+            var modelResults = GetZoomData(month, year);
+
+            return View(modelResults);
+        }
+
+        private ZoomUsageModel GetZoomData(int? month, int? year)
+        {
             month ??= DateTime.Today.Month;
             year ??= DateTime.Today.Year;
 
@@ -43,14 +58,7 @@ namespace CommonPeril.Controllers
                 ZoomData = modelData
 
             };
-
-            return View(modelReseults);
-        }
-
-        public IActionResult Minor()
-        {
-
-            return View();
+            return modelReseults;
         }
 
     }
