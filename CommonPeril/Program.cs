@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ namespace ASPNET_Core_3
 {
     public class Program
     {
+        static string webRoot = Path.Combine(AppContext.BaseDirectory, "wwwroot");
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -21,6 +23,7 @@ namespace ASPNET_Core_3
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseWebRoot("wwwroot");
                 });
     }
 }

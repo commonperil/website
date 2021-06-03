@@ -1,8 +1,10 @@
 ﻿@using System.Runtime.CompilerServices
+@using Newtonsoft.Json
 
 @model CommonPeril.Models.ZoomUsageModel
 @{
     ViewBag.Title = "Graphs";
+    var jsonModel = JsonConvert.SerializeObject(Model);
 }
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -66,7 +68,7 @@
                                 </div>
                             </div>
                             <div class="ibox-content">
-                                <form asp-controller="Home" asp-action="Main">
+                                <form asp-controller="Home" asp-action="Graphs">
 
                                     <div class="form-group row col-lg-5">
                                         <div class="col-lg-6">
@@ -113,28 +115,26 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-
+            var model = @Html.Raw(jsonModel);
             Morris.Bar({
                 element: 'morris-bar-chart',
-                data: [
-                    { y: '2006', a: 60, b: 50 },
-                    { y: '2007', a: 75, b: 65 },
-                    { y: '2008', a: 50, b: 40 },
-                    { y: '2009', a: 75, b: 65 },
-                    { y: '2010', a: 50, b: 40 },
-                    { y: '2011', a: 75, b: 65 },
-                    { y: '2012', a: 100, b: 90 }
-                ],
-                xkey: 'y',
-                ykeys: ['a', 'b'],
-                labels: ['Series A', 'Series B'],
+                data: model.ZoomData,
+                xkey: 'day',
+                ykeys: ['meetings', 'participants'],
+                labels: ['meetings', 'participants'],
                 hideHover: 'auto',
                 resize: true,
                 barColors: ['#1ab394', '#cacaca'],
             });
-            var model = @Html.Raw(Json.Serialize(Model));
 
-           
+            
+
+
+            //var morrisData = [];
+            //$.each(model.ZoomData, function(date, val){
+            //    morrisData.push({'index': key, 'Value' : val});
+            //});
+
         });
     </script>
 }

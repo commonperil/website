@@ -36,6 +36,7 @@ namespace CommonPeril.Models
         [DataType(DataType.Date)]
         [JsonProperty("date")]
         public DateTime MeetingDate { get; set; }
+        [JsonProperty("day")] public int Day => MeetingDate.Day;
 
         [JsonProperty("meetings")] public int Meetings { get; set; }
         [JsonProperty("participants")] public int Users { get; set; }

@@ -41,6 +41,7 @@ namespace ASPNET_Core_3
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
 
             app.UseRouting();
 
