@@ -13,7 +13,7 @@ namespace CommonPeril.Controllers
     public class HomeController : Controller
     {
        
-       
+        public int sixMonthsBack = DateTime.Now.AddMonths(-6).Month;
         public HomeController()
         {
            
@@ -37,9 +37,21 @@ namespace CommonPeril.Controllers
 
         private ZoomUsageModel GetZoomData(int? month, int? year)
         {
-            month ??= DateTime.Today.Month;
-            year ??= DateTime.Today.Year;
+            month ??= DateTime.Today.Month-1;
+            if (year == null)
+            {
+                year = DateTime.Today.Year;
+            }
 
+            //if (month < sixMonthsBack)
+            //{
+            //    month = sixMonthsBack;
+            //}
+            
+            
+
+
+            Console.WriteLine($"Month: {month} Year{year}");
             var url =
                 $"https://script.google.com/macros/s/AKfycbxTnujwWVsKv2nmfWoAbafq5JFK4EVjVhmigGf0AqPu5anv_0oVo4O2Wa8OBMI-5ey_Mw";
             RestClient client = new RestClient(url);

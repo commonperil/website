@@ -1,7 +1,9 @@
-﻿@model CommonPeril.Models.ZoomUsageModel
+﻿@using Newtonsoft.Json
+@model CommonPeril.Models.ZoomUsageModel
 
 @{
     ViewBag.Title = "Main";
+    var jsonModel = JsonConvert.SerializeObject(Model);
 }
 
 <div class="wrapper wrapper-content">
@@ -38,16 +40,16 @@
 
                         </div>
 
-                        
+
                     </form>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Zoom Data</h5>
+                    
                     <div class="ibox-tools">
                         <a class="collapse-link" href="">
                             <i class="fa fa-chevron-up"></i>
@@ -73,32 +75,82 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach (var item in Model.ZoomData)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.MeetingDate.ToString("MM/dd/yyyy")
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Users)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Meetings)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TotalMinutes)
-                                    </td>
-                                </tr>
-                            }
+                                @foreach (var item in Model.ZoomData)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.MeetingDate.ToString("MM/dd/yyyy")
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Users)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Meetings)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TotalMinutes)
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                             <tfoot>
-                            <tr>
-                                <td colspan="5">
-                                    <ul class="pagination float-right"></ul>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination float-right"></ul>
+                                    </td>
+                                </tr>
                             </tfoot>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                  
+                    <div class="ibox-tools">
+                        <a class="collapse-link" href="">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+
+                        <a class="close-link" href="">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="col-lg-12">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>Bar Chart By Users and Date</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li>
+                                            <a href="#" class="dropdown-item">Config option 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="dropdown-item">Config option 2</a>
+                                        </li>
+                                    </ul>
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div id="morris-bar-chart"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,11 +165,22 @@
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/lib/footable/css/footable.core.min.css" />
     </environment>
+    <environment names="Development,Staging,Production">
+        <link rel="stylesheet" href="~/lib/morrisjs/morris.css" />
+    </environment>
 }
 
 @section Scripts {
     <environment names="Development,Staging,Production">
         <script src="~/lib/footable/dist/footable.all.min.js"></script>
+    </environment>
+    <environment names="Development">
+        <script src="~/lib/raphael/raphael.js"></script>
+        <script src="~/lib/morrisjs/morris.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/raphael/raphael-min.js"></script>
+        <script src="~/lib/morrisjs/morris.min.js"></script>
     </environment>
 
     <script type="text/javascript">
@@ -125,6 +188,19 @@
 
             $('.footable').footable();
             $('.footable2').footable();
+
+            var model = @Html.Raw(jsonModel);
+            Morris.Bar({
+                element: 'morris-bar-chart',
+                data: model.ZoomData,
+                xkey: 'day',
+                ykeys: ['meetings', 'participants'],
+                labels: ['meetings', 'participants'],
+                hideHover: 'auto',
+                resize: true,
+                stacked: true,
+                barColors: ['#1ab394', '#cacaca'],
+            });
 
 
         });

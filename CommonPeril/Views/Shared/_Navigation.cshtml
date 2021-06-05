@@ -6,13 +6,20 @@
                     IN+
                 </div>
             </li>
-            <li class="@Html.IsSelected(controller: "Home", action: "Main")">
-                <a href="@Url.Action("Main", "Home")"><i class="fa fa-table"></i> <span class="nav-label">Zoom - Daily Usage</span></a>
-               
+            <li class="@Html.IsSelected(controller: "Dashboards")">
+                <a href="@Url.Action("Main", "Home")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Dashboards</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Home", cssClass: "in")">
+                    <li class="@Html.IsSelected(controller: "Home", action: "Main")">
+                        <a href="@Url.Action("Main", "Home")"><i class="fa fa-table"></i> <span class="nav-label">Dashboard</span></a>
+
+                    </li>
+                    <li class="@Html.IsSelected(controller: "Home", action: "Graphs")">
+                        <a href="@Url.Action("Graphs", "Home")"><i class="fa fa-bar-chart"></i> <span class="nav-label">Zoom - Graphs</span></a>
+                    </li>
+                </ul>
+
             </li>
-            <li class="@Html.IsSelected(controller: "Home", action: "Graphs")">
-                <a href="@Url.Action("Graphs", "Home")"><i class="fa fa-bar-chart"></i> <span class="nav-label">Zoom - Graphs</span></a>
-            </li>
+            
         </ul>
     </div>
 </nav>
